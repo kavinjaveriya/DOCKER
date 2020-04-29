@@ -1,0 +1,36 @@
+version: '3'
+
+services:
+  joomla:
+    image: joomla:latest
+    restart: always
+    depends_on:
+      - dbos
+    ports:
+      - 8080:80
+    volumes:
+      - wp_storage_new:/var/www/html
+    environment:
+      JOOMLA_DB_HOST: dbos
+      JOOMLA_DB_USER: mukul
+      JOOMLA_DB_PASSWORD: redhat
+      JOOMLA_DB_NAME: mydb
+
+
+  dbos:
+    image: mariadb:latest
+    ports:
+      - 3306
+    restart: always
+    volumes:
+         - mysql_storage_new:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpass
+      MYSQL_USER: mukul
+      MYSQL_PASSWORD: redhat
+      MYSQL_DATABASE: mydb
+
+
+volumes: 
+   wp_storage_new:
+   mysql_storage_new:
